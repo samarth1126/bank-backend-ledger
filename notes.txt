@@ -1,0 +1,3 @@
+/*npx==node package executioner*/
+// nodemon== detects even slighttest changes in the server.js file
+// cluster password==826Ue80LATXCNIF8
