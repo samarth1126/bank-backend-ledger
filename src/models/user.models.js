@@ -1,54 +1,57 @@
-const mongoose=require("mongoose")
-const bcrypt=require("bcryptjs")
+const mongoose = require("mongoose")
+const bcrypt = require("bcryptjs")
 
 
-
-
-
-const userSchema=mongoose.Schema({
-    email:{
-        type:String,
-        required:[true,"Email chahiye bhaiiiiii"],
-        trim:true,
-        lowercase:true,
-        match:[/^\S+@\S+\.\S+$/, "Invalid Email"],
-        unique:[true,"Email copy kar rahe heeee beteteeee"]
+const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        required: [ true, "Email is required for creating a user" ],
+        trim: true,
+        lowercase: true,
+        match: [ /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid Email address" ],
+        unique: [ true, "Email already exists." ]
     },
-    name:{
-        type:String,
-        required:[true,"Name chahiye mann"]
+    name: {
+        type: String,
+        required: [ true, "Name is required for creating an account" ]
     },
-    password:{
-        type:String,
-        required:[true,"Password to chahiyey na bhaiii"],
-        minlength:[6,"password atleast 6 character ka toh hona chahiye"],
-        select:false
+    password: {
+        type: String,
+        required: [ true, "Password is required for creating an account" ],
+        minlength: [ 6, "password should contain more than 6 character" ],
+        select: false
+    },
+    systemUser: {
+        type: Boolean,
+        default: false,
+        immutable: true,
+        select: false
     }
-},{
-    timestamps:true
+}, {
+    timestamps: true
 })
 
-// user.models.js - more defensive version
-// ❌ OLD WAY (Mongoose 5 style) - causes the error
-// userSchema.pre("save", async function(next) {
-//     try {
-//         if (!this.isModified("password")) return next();
-//         this.password = await bcrypt.hash(this.password, 10);
-//         next();
-//     } catch(err) {
-//         next(err);
-//     }
-// });
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) {
+        return
+    }
 
-// ✅ NEW WAY (Mongoose 6/7/8) - just use async/await, no next()
-userSchema.pre("save", async function() {
-    if (!this.isModified("password")) return;
-    this.password = await bcrypt.hash(this.password, 10);
-});
+    const hash = await bcrypt.hash(this.password, 10)
+    this.password = hash
 
-userSchema.methods.comparePassword=async function(password){
+    return
+
+})
+
+userSchema.methods.comparePassword = async function (password) {
+
+    console.log(password, this.password)
+
     return await bcrypt.compare(password, this.password)
+
 }
 
-const userModel=mongoose.model("user",userSchema)
-module.exports=userModel
+
+const userModel = mongoose.model("user", userSchema)
+
+module.exports = userModel
