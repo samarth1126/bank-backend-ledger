@@ -69,3 +69,8 @@ module.exports = {
     sendTransactionEmail,
     sendTransactionFailureEmail
 };
+
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("CLIENT_ID exists:", !!process.env.CLIENT_ID);
+console.log("CLIENT_SECRET exists:", !!process.env.CLIENT_SECRET);
+console.log("REFRESH_TOKEN exists:", !!process.env.REFRESH_TOKEN);

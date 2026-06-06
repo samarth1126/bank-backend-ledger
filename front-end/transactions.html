@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/animations.css">
+
+    
+
+    <script src="./js/config.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/transfer.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/transactions.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>🏦 Ledger Bank</h2>
+
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="accounts.html">Accounts</a></li>
+            <li><a href="transfer.html">Transfer Money</a></li>
+            <li><a href="transactions.html" class="active">Transactions</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+
+        <div class="page-header">
+            <h1>Transaction History</h1>
+            <p>View all your recent transfers and account activities.</p>
+        </div>
+
+        <div class="transactions-container">
+
+            <div class="transaction-card credit">
+                <div class="transaction-info">
+                    <h3>Received Funds</h3>
+                    <p>Account: 68475xxxx</p>
+                    <small>05 June 2026 • 10:30 AM</small>
+                </div>
+
+                <div class="transaction-amount amount-credit">
+                    + ₹5,000
+                </div>
+            </div>
+
+            <div class="transaction-card debit">
+                <div class="transaction-info">
+                    <h3>Transfer Sent</h3>
+                    <p>Account: 79384xxxx</p>
+                    <small>04 June 2026 • 03:15 PM</small>
+                </div>
+
+                <div class="transaction-amount amount-debit">
+                    - ₹2,000
+                </div>
+            </div>
+
+            <div class="transaction-card credit">
+                <div class="transaction-info">
+                    <h3>Salary Credit</h3>
+                    <p>Employer Deposit</p>
+                    <small>01 June 2026 • 09:00 AM</small>
+                </div>
+
+                <div class="transaction-amount amount-credit">
+                    + ₹45,000
+                </div>
+            </div>
+
+            <div class="transaction-card debit">
+                <div class="transaction-info">
+                    <h3>Utility Payment</h3>
+                    <p>Electricity Bill</p>
+                    <small>30 May 2026 • 08:20 PM</small>
+                </div>
+
+                <div class="transaction-amount amount-debit">
+                    - ₹1,250
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/transactions.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Transactions | LedgerBank</title>
+
+<link rel="stylesheet" href="./css/style.css">
+
+<style>
+
+.transactions-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.search-box{
+    width:300px;
+}
+
+.search-box input{
+    width:100%;
+}
+
+.transactions-list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.transaction-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    padding:20px;
+
+    transition:.3s;
+}
+
+.transaction-card:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.transaction-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.status{
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+}
+
+.completed{
+    background:rgba(34,197,94,.15);
+    color:#22c55e;
+}
+
+.pending{
+    background:rgba(245,158,11,.15);
+    color:#f59e0b;
+}
+
+.failed{
+    background:rgba(239,68,68,.15);
+    color:#ef4444;
+}
+
+.amount{
+
+    font-size:1.8rem;
+    font-weight:700;
+
+    color:var(--success);
+}
+
+.meta{
+
+    color:var(--text-secondary);
+    margin-top:10px;
+    font-size:.9rem;
+}
+
+.empty-state{
+
+    text-align:center;
+    padding:50px;
+    color:var(--text-secondary);
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            LedgerBank
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="accounts.html">
+                Accounts
+            </a>
+
+            <a href="transfer.html">
+                Transfer Money
+            </a>
+
+            <a href="transactions.html">
+                Transactions
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <div class="transactions-header">
+
+            <div>
+
+                <h1>
+                    Transaction History
+                </h1>
+
+                <p
+                    style="
+                    color:var(--text-secondary);
+                    margin-top:10px;
+                    "
+                >
+                    View all money transfers
+                </p>
+
+            </div>
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="Search transaction..."
+                >
+
+            </div>
+
+        </div>
+
+        <div id="transactionsContainer">
+
+            <div class="loading">
+                Loading transactions...
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/transactions.js"></script>
+
+</body>
+</html>

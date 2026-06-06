@@ -1,8 +1,17 @@
-const accountModel = require("../models/account.model");
+const accountModel = require("../models/account.models");
 
 
 async function createAccountController(req, res) {
+    const existingAccounts =
+    await accountModel.find({
+        user:req.user._id
+    });
 
+    if(existingAccounts.length >= 3){
+        return res.status(400).json({
+            message:"Maximum account limit reached"
+        });
+    }
     const user = req.user;
 
     const account = await accountModel.create({

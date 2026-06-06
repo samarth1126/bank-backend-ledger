@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | LedgerBank</title>
+
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/animations.css">
+
+
+
+<script src="./js/config.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/transfer.js"></script>
+<style>
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.user-info{
+    color:var(--text-secondary);
+}
+
+.account-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+.account-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:25px;
+}
+
+.account-id{
+    font-size:.8rem;
+    color:var(--text-secondary);
+    word-break:break-all;
+    margin-top:10px;
+}
+
+.balance{
+    font-size:2rem;
+    font-weight:700;
+    margin-top:15px;
+    color:var(--success);
+}
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:var(--text-secondary);
+}
+
+.quick-actions{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.recent-section{
+    margin-top:40px;
+}
+
+.empty{
+    background:var(--card);
+    border-radius:15px;
+    padding:30px;
+    color:var(--text-secondary);
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            LedgerBank
+        </div>
+
+        <div class="sidebar-menu">
+
+            <a href="dashboard.html">Dashboard</a>
+
+            <a href="accounts.html">Accounts</a>
+
+            <a href="transfer.html">Transfer Money</a>
+
+            <a href="transactions.html">Transactions</a>
+
+            <a href="profile.html">Profile</a>
+
+            <a href="#" id="logoutBtn">Logout</a>
+
+        </div>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="main-content">
+
+        <div class="topbar">
+
+            <div>
+
+                <h1 id="welcomeText">
+                    Dashboard
+                </h1>
+
+                <p class="user-info" id="userEmail">
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Balance Card -->
+
+        <div class="balance-card">
+
+            <p>Total Balance</p>
+
+            <h2 id="totalBalance">
+                ₹0
+            </h2>
+
+        </div>
+
+        <!-- Accounts -->
+
+        <h2 style="margin-bottom:20px;">
+            Your Accounts
+        </h2>
+
+        <div id="accountsContainer">
+
+            <div class="loading">
+                Loading Accounts...
+            </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+
+        <div class="quick-actions">
+
+            <button
+                class="btn btn-primary"
+                onclick="window.location.href='transfer.html'"
+            >
+                Transfer Money
+            </button>
+
+            <button
+                class="btn btn-secondary"
+                onclick="window.location.href='accounts.html'"
+            >
+                Manage Accounts
+            </button>
+
+        </div>
+
+        <!-- Recent Activity -->
+
+        <div class="recent-section">
+
+            <h2 style="margin-bottom:20px;">
+                Recent Activity
+            </h2>
+
+            <div class="empty">
+                Transaction history endpoint is not available yet.
+                This section will display recent transfers once a
+                transaction listing route is added.
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/dashboard.js"></script>
+</body>
+</html>

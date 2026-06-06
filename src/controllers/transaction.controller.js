@@ -1,7 +1,7 @@
-const transactionModel = require("../models/transaction.model")
-const ledgerModel = require("../models/ledger.model")
-const accountModel = require("../models/account.model")
-const emailService = require("../services/email.service")
+const transactionModel = require("../models/transaction.models")
+const ledgerModel = require("../models/ledger.models")
+const accountModel = require("../models/account.models")
+const emailService = require("../services/email.services")
 const mongoose = require("mongoose")
 
 /**
@@ -235,8 +235,53 @@ async function createInitialFundsTransaction(req, res) {
 
 
 }
+async function getTransactions(req, res) {
+
+    try {
+
+        const accounts = await accountModel.find({
+            user: req.user._id
+        });
+
+        const accountIds = accounts.map(
+            account => account._id
+        );
+
+        const transactions =
+        await transactionModel.find({
+            $or: [
+                {
+                    fromAccount: {
+                        $in: accountIds
+                    }
+                },
+                {
+                    toAccount: {
+                        $in: accountIds
+                    }
+                }
+            ]
+        })
+        .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            transactions
+        });
+
+    }
+    catch(error){
+
+        res.status(500).json({
+            message:
+            "Failed to fetch transactions"
+        });
+
+    }
+
+}
 
 module.exports = {
     createTransaction,
-    createInitialFundsTransaction
+    createInitialFundsTransaction,
+    getTransactions
 }

@@ -1,0 +1,37 @@
+.account-card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #334155;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.account-card h2 {
+    margin-top: 15px;
+    color: #38bdf8;
+}
+
+#createAccountBtn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.empty-state,
+.error-card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+}

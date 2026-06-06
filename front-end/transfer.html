@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Transfer Money | LedgerBank</title>
+
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/animations.css">
+
+
+
+<script src="./js/config.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/transfer.js"></script>
+<style>
+
+.transfer-container{
+    max-width:700px;
+    margin:auto;
+}
+
+.transfer-card{
+    background:var(--card);
+    padding:35px;
+    border-radius:20px;
+    border:1px solid var(--border);
+}
+
+.message{
+    display:none;
+    margin-bottom:20px;
+    padding:15px;
+    border-radius:10px;
+}
+
+.success{
+    background:rgba(34,197,94,.15);
+    color:#22c55e;
+}
+
+.error{
+    background:rgba(239,68,68,.15);
+    color:#ef4444;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    background:var(--card-hover);
+    border:1px solid var(--border);
+    border-radius:12px;
+    color:white;
+}
+
+.amount-preview{
+    margin-top:15px;
+    color:var(--success);
+    font-size:1.2rem;
+    font-weight:600;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            LedgerBank
+        </div>
+
+        <div class="sidebar-menu">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="accounts.html">Accounts</a>
+            <a href="transfer.html">Transfer Money</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="profile.html">Profile</a>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <div class="transfer-container">
+
+            <div class="transfer-card">
+
+                <h1>
+                    Transfer Money
+                </h1>
+
+                <p
+                    style="
+                    margin-top:10px;
+                    margin-bottom:30px;
+                    color:var(--text-secondary);
+                    "
+                >
+                    Send money securely between accounts.
+                </p>
+
+                <div
+                    id="successBox"
+                    class="message success"
+                ></div>
+
+                <div
+                    id="errorBox"
+                    class="message error"
+                ></div>
+
+                <form id="transferForm">
+
+                    <div class="form-group">
+
+                        <label>
+                            From Account
+                        </label>
+
+                        <select id="fromAccount">
+
+                            <option>
+                                Loading...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Recipient Account ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="toAccount"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Amount
+                        </label>
+
+                        <input
+                            type="number"
+                            min="1"
+                            id="amount"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div
+                        class="amount-preview"
+                        id="preview"
+                    >
+                        ₹0
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="
+                        width:100%;
+                        margin-top:25px;
+                        "
+                    >
+                        Send Money
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/transfer.js"></script>
+</body>
+</html>

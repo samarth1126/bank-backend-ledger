@@ -8,7 +8,16 @@ const transactionRoutes = Router();
  * - POST /api/transactions/
  * - Create a new transaction
  */
+/**
+ * GET /api/transactions
+ * Get user transaction history
+ */
 
+transactionRoutes.get(
+    "/",
+    authMiddleware.authMiddleware,
+    transactionController.getTransactions
+);
 transactionRoutes.post("/", authMiddleware.authMiddleware, transactionController.createTransaction)
 
 

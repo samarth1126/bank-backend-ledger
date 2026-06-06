@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register | LedgerBank</title>
+
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/components.css">
+<link rel="stylesheet" href="./css/animations.css">
+
+
+
+<script src="./js/config.js"></script>
+<script src="./js/api.js"></script>
+<script src="./js/transfer.js"></script>
+<style>
+
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        rgba(15,17,23,.9),
+        rgba(15,17,23,.9)
+    ),
+    url("https://images.unsplash.com/photo-1579621970795-87facc2f976d");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.register-container{
+    width:100%;
+    max-width:500px;
+    padding:20px;
+}
+
+.register-card{
+    background:rgba(23,25,35,.85);
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+    padding:40px;
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.logo h1{
+    color:var(--primary);
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--text-secondary);
+    margin-bottom:30px;
+}
+
+.message{
+    display:none;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.error{
+    background:rgba(239,68,68,.15);
+    color:#ff6b6b;
+}
+
+.success{
+    background:rgba(34,197,94,.15);
+    color:#22c55e;
+}
+
+.footer{
+    margin-top:20px;
+    text-align:center;
+}
+
+.footer a{
+    color:var(--primary);
+    text-decoration:none;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <div class="logo">
+            <h1>LedgerBank</h1>
+        </div>
+
+        <p class="subtitle">
+            Create your digital banking account
+        </p>
+
+        <div id="error" class="message error"></div>
+        <div id="success" class="message success"></div>
+
+        <form id="registerForm">
+
+            <div class="form-group">
+                <label>Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+                style="width:100%;"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="footer">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const BASE_URL="http://localhost:3000/api";
+
+const registerForm=document.getElementById("registerForm");
+
+const errorBox=document.getElementById("error");
+const successBox=document.getElementById("success");
+
+function showError(msg){
+
+    errorBox.style.display="block";
+    successBox.style.display="none";
+
+    errorBox.innerText=msg;
+}
+
+function showSuccess(msg){
+
+    successBox.style.display="block";
+    errorBox.style.display="none";
+
+    successBox.innerText=msg;
+}
+
+registerForm.addEventListener("submit", async(e)=>{
+
+    e.preventDefault();
+
+    const name=document.getElementById("name").value;
+    const email=document.getElementById("email").value;
+    const password=document.getElementById("password").value;
+
+    try{
+
+        const response=await fetch(
+            `${BASE_URL}/auth/register`,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    name,
+                    email,
+                    password
+                })
+            }
+        );
+
+        const data=await response.json();
+
+        if(!response.ok){
+            throw new Error(
+                data.message || "Registration Failed"
+            );
+        }
+
+        localStorage.setItem(
+            "token",
+            data.token
+        );
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(data.user)
+        );
+
+        showSuccess(
+            "Account Created Successfully"
+        );
+
+        setTimeout(()=>{
+            window.location.href=
+            "dashboard.html";
+        },1500);
+
+    }
+    catch(err){
+        showError(err.message);
+    }
+
+});
+
+</script>
+
+</body>
+</html>
